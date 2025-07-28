@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-perfume.jpg";
 
 const Hero = () => {
@@ -12,17 +13,17 @@ const Hero = () => {
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Main heading */}
-          <h1 className="font-luxury text-6xl md:text-8xl font-bold text-foreground mb-8 tracking-tight">
+          <h1 className="font-luxury text-6xl md:text-8xl font-bold text-foreground mb-8 tracking-tight animate-fade-in-up">
             Noire Lumière
           </h1>
           
           {/* Subheading */}
-          <p className="text-xl md:text-2xl text-muted-foreground mb-12 font-light tracking-wide max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-muted-foreground mb-12 font-light tracking-wide max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
             Discover the art of luxury fragrance. Where elegance meets sophistication in every note.
           </p>
           
           {/* Hero Image */}
-          <div className="relative mb-12">
+          <div className="relative mb-12 animate-scale-in" style={{ animationDelay: '0.6s' }}>
             <div className="relative max-w-md mx-auto">
               {/* Geometric platform base */}
               <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-80 h-20 bg-gradient-card rounded-lg shadow-luxury"></div>
@@ -32,7 +33,7 @@ const Hero = () => {
               <img 
                 src={heroImage} 
                 alt="Noire Lumière signature fragrance" 
-                className="relative z-10 w-full h-auto drop-shadow-elegant"
+                className="relative z-10 w-full h-auto drop-shadow-elegant hover:scale-105 transition-transform duration-700"
               />
             </div>
             
@@ -43,13 +44,17 @@ const Hero = () => {
           </div>
           
           {/* CTA */}
-          <div className="space-x-6">
-            <button className="bg-primary text-primary-foreground px-8 py-4 rounded-md font-medium tracking-wide shadow-luxury hover:shadow-elegant transition-all duration-300 hover:bg-primary/95">
-              Explore Collection
-            </button>
-            <button className="border border-border bg-background/80 backdrop-blur-sm text-foreground px-8 py-4 rounded-md font-medium tracking-wide shadow-card hover:shadow-elegant transition-all duration-300 hover:bg-accent">
-              Learn More
-            </button>
+          <div className="space-x-6 animate-fade-in-up" style={{ animationDelay: '1s' }}>
+            <Link to="/fragrances">
+              <button className="bg-primary text-primary-foreground px-8 py-4 rounded-md font-medium tracking-wide shadow-luxury hover:shadow-elegant transition-all duration-300 hover:bg-primary/95 hover:scale-105">
+                Explore Collection
+              </button>
+            </Link>
+            <Link to="/about">
+              <button className="border border-border bg-background/80 backdrop-blur-sm text-foreground px-8 py-4 rounded-md font-medium tracking-wide shadow-card hover:shadow-elegant transition-all duration-300 hover:bg-accent hover:scale-105">
+                Learn More
+              </button>
+            </Link>
           </div>
         </div>
       </div>

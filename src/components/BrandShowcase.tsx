@@ -36,10 +36,10 @@ const BrandShowcase = () => {
     <section className="py-20 bg-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="font-luxury text-4xl md:text-5xl font-semibold text-foreground mb-6">
+          <h2 className="font-luxury text-4xl md:text-5xl font-semibold text-foreground mb-6 animate-fade-in-up">
             Curated Luxury Brands
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             Discover fragrances from the world's most prestigious perfume houses
           </p>
         </div>
@@ -48,7 +48,8 @@ const BrandShowcase = () => {
           {brands.map((brand, index) => (
             <div 
               key={brand.name}
-              className="group bg-card border border-border rounded-lg p-8 shadow-card hover:shadow-elegant transition-all duration-300 hover:-translate-y-1"
+              className="group bg-card border border-border rounded-lg p-8 shadow-card hover:shadow-elegant transition-all duration-300 hover:-translate-y-1 animate-scale-in"
+              style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="text-center">
                 <h3 className="font-luxury text-2xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">

@@ -1,14 +1,17 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import perfume1 from "@/assets/perfume-1.jpg";
 import perfume2 from "@/assets/perfume-2.jpg";
 import perfume3 from "@/assets/perfume-3.jpg";
 import { Star, Filter, Search } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
 
 const Fragrances = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedBrand, setSelectedBrand] = useState("all");
+  const { addToCart } = useCart();
 
   const fragrances = [
     {
@@ -113,10 +116,10 @@ const Fragrances = () => {
       <section className="relative py-20 bg-gradient-luxury">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="font-luxury text-5xl md:text-6xl font-bold text-foreground mb-6">
+            <h1 className="font-luxury text-5xl md:text-6xl font-bold text-foreground mb-6 animate-fade-in-up">
               Luxury Fragrances
             </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed">
+            <p className="text-xl text-muted-foreground leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               Discover our curated collection of the world's finest perfumes
             </p>
           </div>
@@ -175,25 +178,28 @@ const Fragrances = () => {
       <section className="py-16">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredFragrances.map((fragrance) => (
+            {filteredFragrances.map((fragrance, index) => (
               <div 
                 key={fragrance.id}
-                className="group bg-card border border-border rounded-xl overflow-hidden shadow-card hover:shadow-elegant transition-all duration-300 hover:-translate-y-2"
+                className="group bg-card border border-border rounded-xl overflow-hidden shadow-card hover:shadow-elegant transition-all duration-300 hover:-translate-y-2 animate-scale-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {/* Product Image */}
-                <div className="relative overflow-hidden bg-gradient-card">
-                  <img 
-                    src={fragrance.image} 
-                    alt={fragrance.name}
-                    className="w-full h-80 object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                  />
-                  {fragrance.originalPrice && (
-                    <div className="absolute top-4 left-4 bg-destructive text-destructive-foreground px-2 py-1 rounded-full text-xs font-medium">
-                      Sale
-                    </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </div>
+                <Link to={`/product/${fragrance.id}`}>
+                  <div className="relative overflow-hidden bg-gradient-card cursor-pointer">
+                    <img 
+                      src={fragrance.image} 
+                      alt={fragrance.name}
+                      className="w-full h-80 object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
+                    {fragrance.originalPrice && (
+                      <div className="absolute top-4 left-4 bg-destructive text-destructive-foreground px-2 py-1 rounded-full text-xs font-medium animate-bounce-in">
+                        Sale
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                </Link>
                 
                 {/* Product Info */}
                 <div className="p-6">
@@ -208,9 +214,11 @@ const Fragrances = () => {
                     </div>
                   </div>
                   
-                  <h3 className="font-luxury text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300">
-                    {fragrance.name}
-                  </h3>
+                  <Link to={`/product/${fragrance.id}`}>
+                    <h3 className="font-luxury text-xl font-semibold text-foreground mb-2 group-hover:text-primary transition-colors duration-300 cursor-pointer">
+                      {fragrance.name}
+                    </h3>
+                  </Link>
                   
                   <p className="text-muted-foreground text-sm leading-relaxed mb-3">
                     {fragrance.description}
@@ -239,7 +247,18 @@ const Fragrances = () => {
                         </span>
                       )}
                     </div>
-                    <button className="bg-primary text-primary-foreground px-6 py-2 rounded-md font-medium shadow-card hover:shadow-elegant transition-all duration-300 hover:bg-primary/95">
+                    <button 
+                      onClick={() => addToCart({
+                        id: fragrance.id,
+                        name: fragrance.name,
+                        brand: fragrance.brand,
+                        price: fragrance.price,
+                        image: fragrance.image,
+                        notes: fragrance.notes,
+                        category: fragrance.category
+                      })}
+                      className="bg-primary text-primary-foreground px-6 py-2 rounded-md font-medium shadow-card hover:shadow-elegant transition-all duration-300 hover:bg-primary/95 hover:scale-105"
+                    >
                       Add to Cart
                     </button>
                   </div>
