@@ -1,6 +1,7 @@
-import { ShoppingCart, X, Plus, Minus } from 'lucide-react';
+import { ShoppingCart, X, Plus, Minus, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
+import * as XLSX from 'xlsx';
 import {
   Sheet,
   SheetContent,
@@ -12,6 +13,62 @@ import {
 
 const Cart = () => {
   const { items, removeFromCart, updateQuantity, getCartTotal, getCartCount } = useCart();
+
+  const handleCheckout = () => {
+    if (items.length === 0) return;
+
+    // Prepare data for Excel
+    const orderData = items.map((item, index) => ({
+      'S.No': index + 1,
+      'Product Name': item.name,
+      'Brand': item.brand,
+      'Price': item.price,
+      'Quantity': item.quantity,
+      'Total Price': `$${(parseFloat(item.price.replace('$', '')) * item.quantity).toFixed(2)}`,
+      'Category': item.category || 'Fragrance',
+      'Notes': item.notes ? item.notes.join(', ') : 'N/A'
+    }));
+
+    // Add summary row
+    const summaryRow = {
+      'S.No': '',
+      'Product Name': 'TOTAL',
+      'Brand': '',
+      'Price': '',
+      'Quantity': getCartCount(),
+      'Total Price': getCartTotal(),
+      'Category': '',
+      'Notes': ''
+    };
+
+    const finalData = [...orderData, summaryRow];
+
+    // Create workbook and worksheet
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(finalData);
+
+    // Set column widths
+    ws['!cols'] = [
+      { wch: 8 },  // S.No
+      { wch: 25 }, // Product Name
+      { wch: 15 }, // Brand
+      { wch: 12 }, // Price
+      { wch: 10 }, // Quantity
+      { wch: 15 }, // Total Price
+      { wch: 12 }, // Category
+      { wch: 30 }  // Notes
+    ];
+
+    // Add worksheet to workbook
+    XLSX.utils.book_append_sheet(wb, ws, 'Order Details');
+
+    // Generate filename with current date
+    const now = new Date();
+    const filename = `Luxury_Perfume_Order_${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}_${now.getHours().toString().padStart(2, '0')}${now.getMinutes().toString().padStart(2, '0')}.xlsx`;
+
+    // Download the file
+    XLSX.writeFile(wb, filename);
+  };
 
   return (
     <Sheet>
@@ -90,8 +147,12 @@ const Cart = () => {
                   <span>Total:</span>
                   <span className="text-primary">{getCartTotal()}</span>
                 </div>
-                <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/95">
-                  Proceed to Checkout
+                <Button 
+                  onClick={handleCheckout}
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/95 flex items-center gap-2"
+                >
+                  <Download className="h-4 w-4" />
+                  Download Order & Checkout
                 </Button>
               </div>
             </>
