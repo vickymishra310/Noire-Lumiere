@@ -54,15 +54,30 @@ const ProductGrid = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-br from-background via-accent/20 to-background overflow-hidden">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="font-luxury text-4xl md:text-5xl font-semibold text-foreground mb-6 animate-fade-in-up">
+    <section className="relative py-32 bg-gradient-to-br from-background via-accent/10 to-primary/5 overflow-hidden">
+      {/* Background Decorative Elements */}
+      <div className="absolute inset-0">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-primary/5 to-transparent rounded-full"></div>
+      </div>
+
+      <div className="container relative mx-auto px-6">
+        <div className="text-center mb-20">
+          <div className="inline-block mb-6">
+            <span className="text-primary text-lg font-medium tracking-widest uppercase animate-fade-in-up">
+              Premium Collection
+            </span>
+          </div>
+          <h2 className="font-luxury text-5xl md:text-7xl lg:text-8xl font-bold text-foreground mb-8 animate-fade-in-up leading-tight" style={{ animationDelay: '0.1s' }}>
             Perfume
+            <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+              Cold Water
+            </span>
           </h2>
-          <h3 className="font-luxury text-6xl md:text-8xl font-bold text-foreground mb-8 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
-            Cold Water
-          </h3>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            Discover the art of luxury fragrance with our exclusive collection of the world's finest perfumes
+          </p>
         </div>
         
         {/* Main Carousel Section */}
@@ -71,33 +86,49 @@ const ProductGrid = () => {
             <CarouselContent>
               {products.map((product, index) => (
                 <CarouselItem key={product.id}>
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[600px]">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center min-h-[700px] py-12">
                     
                     {/* Left Side - Product Info */}
-                    <div className="lg:col-span-4 space-y-6 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
-                      <div className="space-y-4">
-                        <span className="inline-block text-sm font-medium text-primary bg-accent px-4 py-2 rounded-full">
-                          {product.category}
-                        </span>
-                        <h4 className="font-luxury text-3xl md:text-4xl font-bold text-foreground">
-                          {product.name}
-                        </h4>
-                        <p className="text-lg text-muted-foreground leading-relaxed">
+                    <div className="lg:col-span-4 space-y-8 animate-fade-in-up" style={{ animationDelay: `${index * 0.1}s` }}>
+                      <div className="space-y-6">
+                        <div className="inline-flex items-center gap-3 bg-gradient-to-r from-primary/20 to-accent/20 backdrop-blur-sm px-6 py-3 rounded-full border border-primary/30">
+                          <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                          <span className="text-sm font-medium text-primary tracking-wide">
+                            {product.category}
+                          </span>
+                        </div>
+                        
+                        <div className="space-y-4">
+                          <h4 className="font-luxury text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+                            {product.name}
+                          </h4>
+                          <div className="flex items-center gap-4">
+                            <span className="text-2xl font-semibold text-muted-foreground">{product.brand}</span>
+                            <div className="flex items-center gap-2 bg-card/50 backdrop-blur-sm px-4 py-2 rounded-full border border-border">
+                              <Star className="w-5 h-5 fill-luxury-gold text-luxury-gold" />
+                              <span className="text-lg font-medium text-foreground">{product.rating}</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <p className="text-lg text-muted-foreground leading-relaxed max-w-md">
                           {product.longDescription}
                         </p>
-                        <div className="flex items-center space-x-4">
-                          <div className="flex items-center space-x-1">
-                            <Star className="w-5 h-5 fill-luxury-gold text-luxury-gold" />
-                            <span className="text-lg font-medium text-foreground">{product.rating}</span>
-                          </div>
-                          <span className="text-2xl font-bold text-primary">{product.price}</span>
+                        
+                        <div className="flex items-center gap-6">
+                          <span className="text-4xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                            {product.price}
+                          </span>
+                          <div className="h-8 w-px bg-border"></div>
+                          <span className="text-sm text-muted-foreground">Starting price</span>
                         </div>
                       </div>
                       
                       <div className="flex flex-col sm:flex-row gap-4">
                         <Link to={`/product/${product.id}`} className="flex-1">
-                          <button className="w-full bg-primary text-primary-foreground px-8 py-4 rounded-lg font-medium shadow-elegant hover:shadow-glow transition-all duration-300 hover:bg-primary/95 hover:scale-105">
-                            View Details
+                          <button className="group w-full bg-gradient-to-r from-primary to-primary/90 text-primary-foreground px-8 py-4 rounded-xl font-semibold shadow-elegant hover:shadow-glow transition-all duration-500 hover:scale-105 relative overflow-hidden">
+                            <span className="relative z-10">Explore Details</span>
+                            <div className="absolute inset-0 bg-gradient-to-r from-primary/80 to-accent/80 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                           </button>
                         </Link>
                         <button 
@@ -108,9 +139,9 @@ const ProductGrid = () => {
                             price: product.price,
                             image: product.image
                           })}
-                          className="flex-1 border-2 border-primary text-primary px-8 py-4 rounded-lg font-medium hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105"
+                          className="group flex-1 border-2 border-primary/50 text-primary px-8 py-4 rounded-xl font-semibold hover:bg-primary hover:text-primary-foreground transition-all duration-500 hover:scale-105 hover:border-primary backdrop-blur-sm"
                         >
-                          Add to Cart
+                          Add to Collection
                         </button>
                       </div>
                     </div>
@@ -118,31 +149,66 @@ const ProductGrid = () => {
                     {/* Center - Main Product Image */}
                     <div className="lg:col-span-4 flex justify-center">
                       <div className="relative group">
-                        <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-xl transform group-hover:scale-110 transition-transform duration-500"></div>
-                        <img 
-                          src={product.image} 
-                          alt={product.name}
-                          className="relative w-80 h-96 object-cover rounded-2xl shadow-elegant group-hover:shadow-glow transition-all duration-500 transform group-hover:scale-105"
-                        />
+                        {/* Floating elements */}
+                        <div className="absolute -top-6 -left-6 w-24 h-24 bg-gradient-to-br from-accent/30 to-primary/30 rounded-2xl blur-xl animate-float"></div>
+                        <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl blur-2xl animate-float" style={{ animationDelay: '1s' }}></div>
+                        
+                        {/* Main product container */}
+                        <div className="relative">
+                          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-primary/30 rounded-3xl blur-2xl transform group-hover:scale-110 transition-transform duration-700 opacity-80"></div>
+                          <div className="relative bg-gradient-to-br from-card/80 to-background/60 backdrop-blur-xl rounded-3xl p-8 border border-border/50 shadow-2xl">
+                            <img 
+                              src={product.image} 
+                              alt={product.name}
+                              className="w-80 h-96 object-cover rounded-2xl shadow-elegant group-hover:shadow-glow transition-all duration-700 transform group-hover:scale-105 group-hover:rotate-1"
+                            />
+                            {/* Reflection effect */}
+                            <div className="absolute bottom-4 left-8 right-8 h-24 bg-gradient-to-t from-primary/10 to-transparent rounded-b-2xl blur-sm"></div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     
                     {/* Right Side - Additional Info */}
-                    <div className="lg:col-span-4 space-y-6 animate-fade-in-up" style={{ animationDelay: `${index * 0.2}s` }}>
-                      <div className="space-y-4">
-                        <h5 className="font-luxury text-2xl font-semibold text-foreground">
-                          Luxury Woven in Green.
-                        </h5>
-                        <h6 className="text-lg font-medium text-primary">
-                          {product.brand} Privé
-                        </h6>
-                        <p className="text-muted-foreground leading-relaxed">
-                          {product.description}. This exquisite composition captures the essence of sophistication and elegance, creating an unforgettable sensory experience.
+                    <div className="lg:col-span-4 space-y-8 animate-fade-in-up" style={{ animationDelay: `${index * 0.2}s` }}>
+                      <div className="space-y-6">
+                        <div className="space-y-4">
+                          <h5 className="font-luxury text-3xl md:text-4xl font-bold text-foreground leading-tight">
+                            Luxury Woven
+                            <span className="block text-primary">in Green.</span>
+                          </h5>
+                          <div className="flex items-center gap-3">
+                            <div className="w-8 h-px bg-gradient-to-r from-primary to-accent"></div>
+                            <span className="text-lg font-medium text-primary tracking-wide">
+                              {product.brand} Privé
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <p className="text-muted-foreground leading-relaxed text-lg">
+                          {product.description}. This exquisite composition captures the essence of sophistication and elegance, creating an unforgettable sensory experience that lingers in memory.
                         </p>
-                        <div className="pt-4">
-                          <div className="flex items-center justify-between p-4 bg-card rounded-lg border border-border">
-                            <span className="text-sm text-muted-foreground">Concentration</span>
-                            <span className="font-medium text-foreground">Eau de Parfum</span>
+                        
+                        <div className="space-y-4">
+                          <div className="bg-gradient-to-r from-card/80 to-background/60 backdrop-blur-sm rounded-xl p-6 border border-border/50">
+                            <div className="flex items-center justify-between mb-4">
+                              <span className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Fragrance Details</span>
+                              <div className="w-6 h-6 bg-gradient-to-br from-primary to-accent rounded-full"></div>
+                            </div>
+                            <div className="space-y-3">
+                              <div className="flex justify-between">
+                                <span className="text-foreground">Concentration</span>
+                                <span className="font-medium text-primary">Eau de Parfum</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-foreground">Longevity</span>
+                                <span className="font-medium text-primary">8-12 hours</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-foreground">Projection</span>
+                                <span className="font-medium text-primary">Moderate to Strong</span>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -152,32 +218,41 @@ const ProductGrid = () => {
               ))}
             </CarouselContent>
             
-            {/* Custom Navigation */}
-            <div className="flex justify-center mt-12 space-x-4">
-              <CarouselPrevious className="relative inset-auto translate-y-0 h-12 w-12 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 border-0" />
-              <CarouselNext className="relative inset-auto translate-y-0 h-12 w-12 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 border-0" />
+            {/* Custom Navigation with enhanced styling */}
+            <div className="flex justify-center mt-16 space-x-6">
+              <CarouselPrevious className="relative inset-auto translate-y-0 h-14 w-14 rounded-2xl bg-gradient-to-r from-primary to-primary/90 text-primary-foreground hover:from-accent hover:to-primary border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:scale-110" />
+              <CarouselNext className="relative inset-auto translate-y-0 h-14 w-14 rounded-2xl bg-gradient-to-r from-primary to-primary/90 text-primary-foreground hover:from-accent hover:to-primary border-0 shadow-elegant hover:shadow-glow transition-all duration-300 hover:scale-110" />
             </div>
           </Carousel>
         </div>
         
-        {/* Thumbnail Images */}
-        <div className="flex justify-center mt-12 space-x-4">
+        {/* Enhanced Thumbnail Images */}
+        <div className="flex justify-center mt-16 space-x-6">
           {products.map((product, index) => (
             <div key={product.id} className="relative group cursor-pointer">
-              <img 
-                src={product.image} 
-                alt={product.name}
-                className="w-20 h-24 object-cover rounded-lg opacity-60 hover:opacity-100 transition-opacity duration-300"
-              />
-              <div className="absolute inset-0 bg-primary/20 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative overflow-hidden rounded-2xl">
+                <img 
+                  src={product.image} 
+                  alt={product.name}
+                  className="w-24 h-32 object-cover opacity-50 hover:opacity-100 transition-all duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                <div className="absolute bottom-2 left-2 right-2">
+                  <div className="bg-background/80 backdrop-blur-sm rounded-lg px-2 py-1 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
+                    <span className="text-xs font-medium text-foreground">{product.brand}</span>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
         
-        <div className="text-center mt-16">
+        <div className="text-center mt-20">
           <Link to="/fragrances">
-            <button className="border-2 border-primary text-primary px-12 py-4 rounded-lg font-medium tracking-wide hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105 shadow-elegant">
-              Explore Full Collection
+            <button className="group relative px-12 py-5 bg-gradient-to-r from-transparent to-transparent border-2 border-primary/50 text-primary rounded-2xl font-semibold tracking-wide hover:border-primary transition-all duration-500 hover:scale-105 overflow-hidden">
+              <span className="relative z-10">Explore Full Collection</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-accent transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
             </button>
           </Link>
         </div>

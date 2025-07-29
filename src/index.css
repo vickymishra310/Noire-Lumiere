@@ -51,6 +51,10 @@ All colors MUST be HSL.
     --shadow-luxury: 0 10px 40px -10px hsl(var(--luxury-shadow) / 0.15);
     --shadow-card: 0 4px 20px -4px hsl(var(--luxury-shadow) / 0.1);
     --shadow-elegant: 0 8px 30px -8px hsl(var(--luxury-shadow) / 0.2);
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
+    
+    /* Background gradients */
+    --gradient-radial: radial-gradient(circle, var(--tw-gradient-stops));
 
     --radius: 0.5rem;
 
