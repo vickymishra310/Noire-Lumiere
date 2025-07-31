@@ -1,4 +1,4 @@
-# Welcome to your Lovable project
+# Welcome to Perfume Brand Noire Lumière 
 
 ## Project info
 
@@ -10,7 +10,7 @@ There are several ways of editing your application.
 
 **Use Lovable**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/a17f9f1b-353d-4002-beb3-8df31f459d35) and start prompting.
+Simply visit the [Noire Lumière](https://lovable.dev/projects/a17f9f1b-353d-4002-beb3-8df31f459d35) and start prompting.
 
 Changes made via Lovable will be committed automatically to this repo.
 
