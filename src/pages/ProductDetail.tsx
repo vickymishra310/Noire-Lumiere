@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import { Star, ArrowLeft, Heart, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/contexts/CartContext';
+import * as XLSX from 'xlsx';
 import perfume1 from '@/assets/perfume-1.jpg';
 import perfume2 from '@/assets/perfume-2.jpg';
 import perfume3 from '@/assets/perfume-3.jpg';
@@ -86,6 +87,50 @@ const ProductDetail = () => {
       notes: product.notes,
       category: product.category
     });
+  };
+
+  const handleBuyNow = () => {
+    // Prepare data for Excel export
+    const orderData = [
+      {
+        'Product Name': product.name,
+        'Brand': product.brand,
+        'Size': selectedSize,
+        'Price': product.price,
+        'Rating': product.rating,
+        'Reviews': product.reviews,
+        'Category': product.category,
+        'Key Notes': product.notes.join(', '),
+        'Description': product.description,
+        'Full Description': product.fullDescription
+      }
+    ];
+
+    // Create workbook and worksheet
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(orderData);
+
+    // Set column widths
+    const columnWidths = [
+      { wch: 20 }, // Product Name
+      { wch: 15 }, // Brand
+      { wch: 10 }, // Size
+      { wch: 12 }, // Price
+      { wch: 10 }, // Rating
+      { wch: 10 }, // Reviews
+      { wch: 12 }, // Category
+      { wch: 30 }, // Key Notes
+      { wch: 50 }, // Description
+      { wch: 80 }  // Full Description
+    ];
+    worksheet['!cols'] = columnWidths;
+
+    // Add worksheet to workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Product Details');
+
+    // Generate and download the file
+    const fileName = `${product.brand}_${product.name.replace(/\s+/g, '_')}_Order.xlsx`;
+    XLSX.writeFile(workbook, fileName);
   };
 
   return (
@@ -220,6 +265,7 @@ const ProductDetail = () => {
               
               <Button 
                 variant="outline" 
+                onClick={handleBuyNow}
                 className="w-full py-4 text-lg font-medium border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300"
               >
                 Buy Now
